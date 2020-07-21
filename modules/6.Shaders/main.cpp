@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
     TGAImage image(width, height, TGAImage::RGB);
     TGAImage zbuffer(width, height, TGAImage::GRAYSCALE);
 
-    NormalMappingShader shader;
+    PhongShader shader;
     shader.uniform_M = Projection * ModelView;
     shader.uniform_MIT = (Projection * ModelView).invert_transpose();
 
