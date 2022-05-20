@@ -2,7 +2,7 @@
 #include "our_gl.h"
 
 struct GouraudShader : public IShader {
-  Vec3f vertex_lightIntensity;
+  Vec3f vertex_lightIntensity {};
 
   // virtual ~GouraudShader() {}
 
@@ -23,7 +23,7 @@ struct GouraudShader : public IShader {
 };
 
 struct ToonShader : public IShader {
-  Vec3f vertex_lightIntensity;
+  Vec3f vertex_lightIntensity {};
 
   // virtual ~ToonShader() {}
 
@@ -55,8 +55,8 @@ struct ToonShader : public IShader {
 
 // 使用Texture
 struct DiffuseShader : public IShader {
-  Vec3f vertex_lightIntensity;
-  mat<2, 3, float> varying_uv;
+  Vec3f vertex_lightIntensity {};
+  mat<2, 3, float> varying_uv {};
 
   // virtual ~DiffuseShader() {}
 
@@ -79,9 +79,9 @@ struct DiffuseShader : public IShader {
 
 // 使用Normal Mapping Texture获取信息而不是使用顶点的normal做插值
 struct NormalMappingShader : public IShader {
-    mat<2,3,float> varying_uv;
-    mat<4,4,float> uniform_M;   // Projection*ModelView
-    mat<4,4,float> uniform_MIT; // Inverse transform of Projection*ModelView
+    mat<2,3,float> varying_uv {};
+    mat<4,4,float> uniform_M {};   // Projection*ModelView
+    mat<4,4,float> uniform_MIT {}; // Inverse transform of Projection*ModelView
     
     // virtual ~NormalMapping() {}
 
@@ -102,9 +102,9 @@ struct NormalMappingShader : public IShader {
 };
 
 struct PhongShader : public IShader {
-	mat<2,3,float> varying_uv;
-	mat<4,4,float> uniform_M;
-	mat<4,4,float> uniform_MIT;
+	mat<2,3,float> varying_uv {};
+	mat<4,4,float> uniform_M {};
+	mat<4,4,float> uniform_MIT {};
 
 	virtual Vec4f vertex(int nthface, int nthvert) {
 		varying_uv.set_col(nthvert, model->uv(nthface, nthvert));
@@ -130,13 +130,13 @@ struct PhongShader : public IShader {
 // If we want use TangentSpaceNormalMap, make sure we are using tangent space normal texture !
 // load_texture(filename, "_nm_tangent.tga", normalmap_) in model.cpp
 struct TangentSpaceNormalMap : public IShader {
-    mat<2,3,float> varying_uv;  // vertex uv coordinates
-    mat<4,3,float> varying_tri; // vertex in clip coordinates
-    mat<3,3,float> varying_nrm; // normal per vertex in clip coordinates to be interpolated by fragment shader
-    mat<3,3,float> ndc_tri;     // vertex in normalized device coordinates
+    mat<2,3,float> varying_uv {};  // vertex uv coordinates
+    mat<4,3,float> varying_tri {}; // vertex in clip coordinates
+    mat<3,3,float> varying_nrm {}; // normal per vertex in clip coordinates to be interpolated by fragment shader
+    mat<3,3,float> ndc_tri {};     // vertex in normalized device coordinates
 
-    mat<4,4,float> uniform_M;   // Projection*ModelView
-    mat<4,4,float> uniform_MIT; // Inverse transform of Projection*ModelView
+    mat<4,4,float> uniform_M {};   // Projection*ModelView
+    mat<4,4,float> uniform_MIT {}; // Inverse transform of Projection*ModelView
 
     virtual Vec4f vertex(int iface, int nvert) {
         varying_uv.set_col(nvert, model->uv(iface, nvert));
