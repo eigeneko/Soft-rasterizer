@@ -91,6 +91,7 @@ struct NormalMappingShader : public IShader {
         return Viewport * Projection * ModelView * GL_Vertex;
     }
 
+    // light direciton transformation can be extract out of FS. We don't need to compute it in FS everytime. 
     bool virtual fragment(Vec3f bar_coordinates, TGAColor& color) {
         Vec2f uv = varying_uv * bar_coordinates;
         Vec3f n = proj<3>(uniform_MIT * embed<4>(model->normal(uv))).normalize();
@@ -171,7 +172,10 @@ struct TangentSpaceNormalMap : public IShader {
         B.set_col(2, bn);
 
         Vec3f n = (B * model->normal(uv)).normalize();
-        Vec3f l = proj<3>(uniform_M * embed<4>(light_dir, 0.f)).normalize(); // Don't forget to transform light direction !
+
+        // Don't forget to transform light direction !
+        // light direciton transformation can be extract out of FS. We don't need to compute it in FS everytime.
+        Vec3f l = proj<3>(uniform_M * embed<4>(light_dir, 0.f)).normalize(); 
 
         float diff = std::max(0.f, n * l);
         color = model->diffuse(uv) * diff;
